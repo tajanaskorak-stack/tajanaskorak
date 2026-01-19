@@ -1,0 +1,47 @@
+.toggle {
+  position: fixed;
+  top: var(--spacing-md);
+  right: var(--spacing-md);
+  width: 44px;
+  height: 44px;
+  border-radius: 0.5rem;
+  border: 1px solid var(--color-border);
+  background: var(--color-bg);
+  color: var(--color-text);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px var(--color-shadow);
+}
+
+.toggle:hover {
+  background: var(--color-bg-hover);
+  border-color: var(--color-border-hover);
+  box-shadow: 0 4px 8px var(--color-shadow-hover);
+  transform: translateY(-1px);
+}
+
+.icon {
+  font-size: 1.25rem;
+  transition: transform 0.2s ease;
+}
+
+.toggle:hover .icon {
+  transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+  .toggle {
+    width: 45px;
+    height: 45px;
+    top: var(--spacing-sm);
+    right: var(--spacing-sm);
+  }
+
+  .icon {
+    font-size: 1.25rem;
+  }
+}

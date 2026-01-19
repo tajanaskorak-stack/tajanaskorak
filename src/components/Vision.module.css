@@ -1,0 +1,22 @@
+.vision {
+  background-color: var(--color-bg-light);
+}
+
+.sectionTitle {
+  text-align: center;
+  margin-bottom: var(--spacing-xl);
+}
+
+.content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.description {
+  font-size: clamp(1.125rem, 2vw, 1.25rem);
+  line-height: 1.8;
+  color: var(--color-text);
+  text-align: center;
+  margin: 0;
+  font-weight: 400;
+}

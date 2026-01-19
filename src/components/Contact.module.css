@@ -1,0 +1,84 @@
+.contact {
+  background-color: var(--color-bg);
+  padding-bottom: var(--spacing-3xl);
+}
+
+.sectionTitle {
+  text-align: center;
+  margin-bottom: var(--spacing-xl);
+}
+
+.contactContent {
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.message {
+  font-size: clamp(1.25rem, 3vw, 1.75rem);
+  color: var(--color-text);
+  margin-bottom: var(--spacing-xl);
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.contactMethods {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-xl);
+  margin-bottom: var(--spacing-xl);
+  flex-wrap: wrap;
+}
+
+.contactLink {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-lg);
+  color: var(--color-text);
+  transition: all 0.2s ease;
+  min-width: 120px;
+  border-radius: 0.75rem;
+  background: var(--color-bg-light);
+  border: 1px solid var(--color-border);
+}
+
+.contactLink:hover {
+  color: var(--color-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--color-shadow-hover);
+  border-color: var(--color-border-hover);
+}
+
+.contactIcon {
+  font-size: 2rem;
+}
+
+.contactLink span:last-child {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.contactDetail {
+  font-size: 0.875rem;
+  color: var(--color-text-light);
+  font-weight: 400;
+  margin-top: var(--spacing-xs);
+  word-break: break-word;
+}
+
+.ctaSection {
+  margin-top: var(--spacing-lg);
+}
+
+@media (max-width: 480px) {
+  .contactMethods {
+    gap: var(--spacing-md);
+  }
+
+  .contactLink {
+    min-width: 100px;
+    padding: var(--spacing-sm);
+  }
+}
