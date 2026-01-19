@@ -1,8 +1,15 @@
+import { useScrollAnimation } from '../hooks/useScrollAnimation';
 import styles from './Experience.module.css';
 
 const Experience = () => {
+  const [ref, isVisible] = useScrollAnimation({ threshold: 0.2 });
+
   return (
-    <section id="experience" className={`section ${styles.experience}`}>
+    <section
+      id="experience"
+      ref={ref}
+      className={`section ${styles.experience} ${isVisible ? styles.fadeInUp : ''}`}
+    >
       <div className="container">
         <h2 className={styles.sectionTitle}>Experience</h2>
         <hr className="divider" />

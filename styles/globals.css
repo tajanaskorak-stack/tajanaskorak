@@ -6,20 +6,28 @@
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   --font-family-mono: 'Courier New', Courier, monospace;
 
-  /* Carrd-inspired Clean Color Scheme */
-  --color-primary: #2563eb;
-  --color-primary-hover: #1d4ed8;
-  --color-accent: #3b82f6;
+  /* Gold Color Scheme */
+  --color-gold: #d4af37;
+  --color-gold-light: #f4e8c1;
+  --color-gold-dark: #b8941e;
+  --color-gold-glow: rgba(212, 175, 55, 0.3);
+  --color-gold-gradient: linear-gradient(135deg, #d4af37 0%, #f4e8c1 50%, #d4af37 100%);
+  --color-gold-gradient-hover: linear-gradient(135deg, #f4e8c1 0%, #d4af37 50%, #b8941e 100%);
+  
+  /* Primary colors - Gold theme */
+  --color-primary: #d4af37;
+  --color-primary-hover: #b8941e;
+  --color-accent: #f4e8c1;
   --color-text: #1f2937;
   --color-text-light: #6b7280;
   --color-text-muted: #9ca3af;
   --color-bg: #ffffff;
-  --color-bg-light: #f9fafb;
-  --color-bg-hover: #f3f4f6;
+  --color-bg-light: #fefbf5;
+  --color-bg-hover: #faf7ed;
   --color-border: #e5e7eb;
-  --color-border-hover: #d1d5db;
-  --color-shadow: rgba(0, 0, 0, 0.05);
-  --color-shadow-hover: rgba(0, 0, 0, 0.1);
+  --color-border-hover: #d4af37;
+  --color-shadow: rgba(212, 175, 55, 0.1);
+  --color-shadow-hover: rgba(212, 175, 55, 0.2);
 
   /* Spacing - Clean, generous spacing like Carrd */
   --spacing-xs: 0.5rem;
@@ -37,18 +45,18 @@
   --breakpoint-xl: 1280px;
 }
 
-/* Dark Mode - Carrd-inspired */
+/* Dark Mode - Gold theme */
 [data-theme='dark'] {
   --color-text: #f9fafb;
   --color-text-light: #d1d5db;
   --color-text-muted: #9ca3af;
-  --color-bg: #111827;
-  --color-bg-light: #1f2937;
-  --color-bg-hover: #374151;
-  --color-border: #374151;
-  --color-border-hover: #4b5563;
-  --color-shadow: rgba(0, 0, 0, 0.3);
-  --color-shadow-hover: rgba(0, 0, 0, 0.4);
+  --color-bg: #1a1625;
+  --color-bg-light: #2a2235;
+  --color-bg-hover: #352a45;
+  --color-border: #3d324d;
+  --color-border-hover: #d4af37;
+  --color-shadow: rgba(212, 175, 55, 0.15);
+  --color-shadow-hover: rgba(212, 175, 55, 0.3);
 }
 
 html {
@@ -139,6 +147,30 @@ h1 {
 h2 {
   font-size: clamp(1.75rem, 4vw, 2.5rem);
   font-weight: 600;
+  position: relative;
+}
+
+/* Ensure section titles are centered - override any inline-block */
+h2.sectionTitle,
+.sectionTitle {
+  display: block !important;
+  text-align: center !important;
+  width: 100% !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+h2.sectionTitle::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: var(--color-gold-gradient);
+  border-radius: 2px;
+  box-shadow: 0 2px 8px var(--color-gold-glow);
 }
 
 h3 {
@@ -146,57 +178,162 @@ h3 {
   font-weight: 600;
 }
 
-/* Buttons - Carrd-inspired rounded, clean buttons */
+/* Buttons - Modern gold-themed buttons with animations */
 .btn {
   display: inline-block;
   padding: 0.75rem 1.5rem;
   font-size: 0.9375rem;
   font-weight: 500;
   text-align: center;
-  border: 1px solid var(--color-border);
+  border: 2px solid var(--color-border);
   background-color: var(--color-bg);
   color: var(--color-text);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border-radius: 0.5rem;
   text-decoration: none;
-  box-shadow: 0 1px 2px var(--color-shadow);
+  box-shadow: 0 2px 4px var(--color-shadow);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: var(--color-gold-gradient);
+  transition: left 0.3s ease;
+  z-index: 0;
 }
 
 .btn:hover {
-  background-color: var(--color-bg-hover);
-  border-color: var(--color-border-hover);
-  box-shadow: 0 2px 4px var(--color-shadow-hover);
-  transform: translateY(-1px);
+  border-color: var(--color-gold);
+  box-shadow: 0 4px 12px var(--color-shadow-hover), 0 0 20px var(--color-gold-glow);
+  transform: translateY(-2px);
+  color: var(--color-text);
+}
+
+.btn:hover::before {
+  left: 0;
+}
+
+.btn > * {
+  position: relative;
+  z-index: 1;
 }
 
 .btn-primary {
-  background-color: var(--color-primary);
-  color: #ffffff;
-  border-color: var(--color-primary);
+  background: var(--color-gold-gradient);
+  color: #1a1625;
+  border-color: var(--color-gold);
+  font-weight: 600;
+}
+
+.btn-primary::before {
+  background: var(--color-gold-gradient-hover);
 }
 
 .btn-primary:hover {
-  background-color: var(--color-primary-hover);
-  border-color: var(--color-primary-hover);
-  color: #ffffff;
+  background: var(--color-gold-gradient-hover);
+  border-color: var(--color-gold-dark);
+  color: #1a1625;
+  box-shadow: 0 6px 16px var(--color-shadow-hover), 0 0 30px var(--color-gold-glow);
+  transform: translateY(-3px);
 }
 
-/* Divider - Carrd-inspired subtle divider */
+/* Divider - Gold-themed divider */
 .divider {
-  width: 60px;
-  height: 2px;
-  background: var(--color-border);
+  width: 80px;
+  height: 3px;
+  background: var(--color-gold-gradient);
   margin: var(--spacing-lg) auto;
   border: none;
-  border-radius: 1px;
+  border-radius: 2px;
+  box-shadow: 0 2px 8px var(--color-gold-glow);
+  animation: shimmer 3s infinite;
 }
 
-/* Accent line - Subtle separator */
+@keyframes shimmer {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 2px 8px var(--color-gold-glow);
+  }
+  50% {
+    opacity: 0.8;
+    box-shadow: 0 2px 12px var(--color-gold-glow);
+  }
+}
+
+/* Gold line - Elegant gold separator with animation */
 .gold-line {
   width: 100%;
-  height: 1px;
-  background: var(--color-border);
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--color-gold) 20%,
+    var(--color-gold-light) 50%,
+    var(--color-gold) 80%,
+    transparent 100%
+  );
   margin: var(--spacing-lg) 0;
-  opacity: 0.5;
+  position: relative;
+  overflow: hidden;
+}
+
+.gold-line::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.5),
+    transparent
+  );
+  animation: goldFlow 3s infinite;
+}
+
+@keyframes goldFlow {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+/* Scroll animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.fade-in {
+  animation: fadeIn 0.6s ease-out forwards;
 }

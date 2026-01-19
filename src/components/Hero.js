@@ -16,9 +16,10 @@ const Hero = () => {
                 <Image
                   src="/Untitled design (1).png"
                   alt="Tajana Škorak - Professional Portrait"
-                  width={400}
-                  height={500}
+                  width={350}
+                  height={350}
                   priority
+                  quality={100}
                   className={styles.professionalImage}
                 />
                 <div className={styles.imageOverlay}></div>

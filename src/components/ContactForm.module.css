@@ -26,9 +26,9 @@
 
 .modalContent {
   background: var(--color-bg);
-  border: 1px solid var(--color-border);
+  border: 2px solid var(--color-gold);
   border-radius: 1rem;
-  box-shadow: 0 20px 60px var(--color-shadow-hover);
+  box-shadow: 0 20px 60px var(--color-shadow-hover), 0 0 40px var(--color-gold-glow);
   max-width: 600px;
   width: 100%;
   max-height: 90vh;
@@ -54,7 +54,7 @@
   top: var(--spacing-md);
   right: var(--spacing-md);
   background: var(--color-bg-light);
-  border: 1px solid var(--color-border);
+  border: 2px solid var(--color-border);
   color: var(--color-text);
   width: 36px;
   height: 36px;
@@ -65,13 +65,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
   z-index: 10;
 }
 
 .closeButton:hover {
-  background: var(--color-bg-hover);
-  border-color: var(--color-border-hover);
+  background: var(--color-gold);
+  border-color: var(--color-gold);
+  color: #1a1625;
+  transform: rotate(90deg);
+  box-shadow: 0 0 15px var(--color-gold-glow);
 }
 
 .modalTitle {
@@ -115,7 +118,7 @@
 
 .label::after {
   content: ' *';
-  color: var(--color-primary);
+  color: var(--color-gold);
 }
 
 .input,
@@ -141,7 +144,8 @@
 
 .input:hover,
 .textarea:hover {
-  border-color: var(--color-border-hover);
+  border-color: var(--color-gold);
+  box-shadow: 0 0 10px var(--color-gold-glow);
 }
 
 .textarea {

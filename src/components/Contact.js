@@ -1,13 +1,19 @@
 import { useState } from 'react';
+import { useScrollAnimation } from '../hooks/useScrollAnimation';
 import ContactForm from './ContactForm';
 import styles from './Contact.module.css';
 
 const Contact = () => {
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const [ref, isVisible] = useScrollAnimation({ threshold: 0.2 });
 
   return (
     <>
-      <section id="contact" className={`section ${styles.contact}`}>
+      <section
+        id="contact"
+        ref={ref}
+        className={`section ${styles.contact} ${isVisible ? styles.fadeInUp : ''}`}
+      >
         <div className="container">
           <h2 className={styles.sectionTitle}>Contact</h2>
           <hr className="divider" />

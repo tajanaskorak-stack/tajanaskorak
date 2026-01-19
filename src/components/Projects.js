@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import { useScrollAnimation } from '../hooks/useScrollAnimation';
 import styles from './Projects.module.css';
 
 const Projects = () => {
   const [selectedProject, setSelectedProject] = useState(null);
+  const [ref, isVisible] = useScrollAnimation({ threshold: 0.1 });
 
   const projects = [
     {
@@ -18,7 +20,7 @@ const Projects = () => {
       title: 'AI Tools & Automation',
       description: 'AI tools & automation learning',
       details: 'Exploring AI-powered solutions to streamline workflows and enhance productivity. Learning machine learning fundamentals and practical applications.',
-      tech: ['Python', 'AI/ML', 'Automation', 'OpenAI'],
+      tech: ['AI/ML', 'Automation', 'OpenAI'],
       icon: '🤖',
     },
     {
@@ -26,14 +28,18 @@ const Projects = () => {
       title: 'Digital Product Experiments',
       description: 'Digital product experiments',
       details: 'Creating innovative digital products that solve real-world problems. Experimenting with new technologies and design patterns.',
-      tech: ['Product Design', 'UX/UI', 'Prototyping', 'User Research'],
+      tech: ['Product Design', 'Canva', 'Prototyping', 'User Research'],
       icon: '💡',
     },
   ];
 
   return (
     <>
-      <section id="projects" className={`section ${styles.projects}`}>
+      <section
+        id="projects"
+        ref={ref}
+        className={`section ${styles.projects} ${isVisible ? styles.fadeInUp : ''}`}
+      >
         <div className="container">
           <h2 className={styles.sectionTitle}>Projects / Learning</h2>
           <hr className="divider" />

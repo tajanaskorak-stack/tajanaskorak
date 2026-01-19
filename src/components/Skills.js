@@ -1,6 +1,10 @@
+import { useScrollAnimation } from '../hooks/useScrollAnimation';
 import styles from './Skills.module.css';
 
 const Skills = () => {
+  // Add scroll animation hook
+  const [ref, isVisible] = useScrollAnimation({ threshold: 0.2 });
+
   const hardSkills = [
     'Sales & Negotiation',
     'Key Account Management',
@@ -17,14 +21,21 @@ const Skills = () => {
   ];
 
   return (
-    <section id="skills" className={`section ${styles.skills}`}>
+    <section
+      id="skills"
+      ref={ref}
+      className={`section ${styles.skills} ${isVisible ? styles.fadeInUp : ''}`}
+    >
       <div className="container">
         <h2 className={styles.sectionTitle}>Skills</h2>
         <hr className="divider" />
 
         <div className={styles.skillsGrid}>
           <div className={styles.skillCategory}>
-            <h3 className={styles.categoryTitle}>Hard Skills</h3>
+            <h3 className={styles.categoryTitle}>
+              <span className={styles.sticker}>💻</span>
+              Hard Skills
+            </h3>
             <ul className={styles.skillList}>
               {hardSkills.map((skill, index) => (
                 <li key={index} className={styles.skillItem}>
@@ -36,7 +47,10 @@ const Skills = () => {
           </div>
 
           <div className={styles.skillCategory}>
-            <h3 className={styles.categoryTitle}>Soft Skills</h3>
+            <h3 className={styles.categoryTitle}>
+              <span className={styles.sticker}>✨</span>
+              Soft Skills
+            </h3>
             <ul className={styles.skillList}>
               {softSkills.map((skill, index) => (
                 <li key={index} className={styles.skillItem}>
