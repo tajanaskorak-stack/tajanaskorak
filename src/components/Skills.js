@@ -18,6 +18,7 @@ const Skills = () => {
     'Strategic Thinking',
     'Relationship Building',
     'Problem Solving',
+    'Adaptability',
   ];
 
   return (
@@ -38,9 +39,13 @@ const Skills = () => {
             </h3>
             <ul className={styles.skillList}>
               {hardSkills.map((skill, index) => (
-                <li key={index} className={styles.skillItem}>
+                <li
+                  key={index}
+                  className={styles.skillItem}
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
                   <span className={styles.skillDot}></span>
-                  {skill}
+                  <span className={styles.skillText}>{skill}</span>
                 </li>
               ))}
             </ul>
@@ -53,9 +58,13 @@ const Skills = () => {
             </h3>
             <ul className={styles.skillList}>
               {softSkills.map((skill, index) => (
-                <li key={index} className={styles.skillItem}>
+                <li
+                  key={index}
+                  className={styles.skillItem}
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
                   <span className={styles.skillDot}></span>
-                  {skill}
+                  <span className={styles.skillText}>{skill}</span>
                 </li>
               ))}
             </ul>

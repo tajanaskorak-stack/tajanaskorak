@@ -1,5 +1,7 @@
 .about {
-  background-color: var(--color-bg-light);
+  background-color: var(--color-bg);
+  position: relative;
+  overflow: hidden;
 }
 
 .sectionTitle {
@@ -25,6 +27,8 @@
   text-align: center;
   margin: 0;
   font-weight: 400;
+  position: relative;
+  z-index: 1;
 }
 
 .fadeInUp {

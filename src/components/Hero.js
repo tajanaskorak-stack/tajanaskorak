@@ -27,8 +27,16 @@ const Hero = () => {
             </div>
 
             <div className={styles.heroText}>
-              <h1 className={styles.name}>Tajana Škorak</h1>
-              <p className={styles.title}>Key Account Manager | AI & Digital Skills | HoReCa</p>
+              <h1 className={styles.name}>
+                <span className={styles.nameGlow}>Tajana Škorak</span>
+              </h1>
+              <p className={styles.title}>
+                <span className={styles.titleLine}>Key Account Manager</span>
+                <span className={styles.titleSeparator}> | </span>
+                <span className={styles.titleLine}>AI & Digital Skills</span>
+                <span className={styles.titleSeparator}> | </span>
+                <span className={styles.titleLine}>HoReCa</span>
+              </p>
 
               <blockquote className={styles.quote}>
                 <p>&ldquo;We are what we repeatedly do. Excellence, then, is not an act, but a habit.&rdquo;</p>
@@ -46,6 +54,8 @@ const Hero = () => {
                 <a
                   href="/Životopis - TAJANA ŠKORAK (4).pdf"
                   download="Životopis - TAJANA ŠKORAK (4).pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="btn"
                 >
                   Download CV
@@ -61,9 +71,15 @@ const Hero = () => {
               </div>
 
               <div className={styles.contactInfo}>
-                <a href="mailto:tajanaskorak@gmail.com">tajanaskorak@gmail.com</a>
+                <a href="mailto:tajanaskorak@gmail.com">
+                  <span className={styles.contactIcon}>✉️</span>
+                  tajanaskorak@gmail.com
+                </a>
                 <span className={styles.separator}>•</span>
-                <a href="tel:+385989679485">+385 98 967 9485</a>
+                <a href="tel:+385989679485">
+                  <span className={styles.contactIcon}>📞</span>
+                  +385 98 967 9485
+                </a>
               </div>
             </div>
           </div>
