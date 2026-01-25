@@ -7,6 +7,7 @@ import Projects from '../src/components/Projects';
 import Vision from '../src/components/Vision';
 import Contact from '../src/components/Contact';
 import DarkModeToggle from '../src/components/DarkModeToggle';
+import Logo from '../src/components/Logo';
 
 export default function Home() {
   return (
@@ -25,6 +26,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+      <Logo />
       <DarkModeToggle />
       <main>
         <Hero />

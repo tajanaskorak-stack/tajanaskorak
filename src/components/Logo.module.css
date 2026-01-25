@@ -1,0 +1,99 @@
+.logo {
+  position: fixed;
+  top: var(--spacing-lg);
+  left: var(--spacing-lg);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.logo:hover {
+  transform: scale(1.1);
+}
+
+.crown {
+  font-size: 1.5rem;
+  animation: crownFloat 3s ease-in-out infinite;
+  filter: drop-shadow(0 2px 4px rgba(212, 175, 55, 0.3));
+}
+
+@keyframes crownFloat {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-5px) rotate(-5deg);
+  }
+  75% {
+    transform: translateY(-5px) rotate(5deg);
+  }
+}
+
+.letter {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--color-gold);
+  background: var(--color-gold-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: letterGlow 2s ease-in-out infinite;
+  text-shadow: 0 0 10px var(--color-gold-glow);
+  position: relative;
+}
+
+.letter::after {
+  content: 'T';
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: var(--color-gold-gradient);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: letterShimmer 3s linear infinite;
+  opacity: 0.8;
+}
+
+@keyframes letterGlow {
+  0%, 100% {
+    filter: drop-shadow(0 0 5px var(--color-gold-glow));
+  }
+  50% {
+    filter: drop-shadow(0 0 15px var(--color-gold-glow));
+  }
+}
+
+@keyframes letterShimmer {
+  0% {
+    background-position: 0% 50%;
+    opacity: 0.8;
+  }
+  50% {
+    background-position: 100% 50%;
+    opacity: 1;
+  }
+  100% {
+    background-position: 200% 50%;
+    opacity: 0.8;
+  }
+}
+
+@media (max-width: 768px) {
+  .logo {
+    top: var(--spacing-md);
+    left: var(--spacing-md);
+  }
+
+  .crown {
+    font-size: 1.25rem;
+  }
+
+  .letter {
+    font-size: 1.5rem;
+  }
+}

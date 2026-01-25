@@ -9,6 +9,8 @@ const ContactForm = ({ isOpen, onClose }) => {
     email: '',
     message: '',
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null); // 'success' | 'error' | null
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -16,25 +18,52 @@ const ContactForm = ({ isOpen, onClose }) => {
       ...prev,
       [name]: value,
     }));
+    // Clear status when user starts typing again
+    if (submitStatus) {
+      setSubmitStatus(null);
+    }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Create mailto link with form data
-    const subject = encodeURIComponent('Contact Request');
-    const body = encodeURIComponent(
-      `Name: ${formData.name}\nSurname: ${formData.surname}\nPhone: ${formData.number}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
-    );
-    window.location.href = `mailto:tajanaskorak@gmail.com?subject=${subject}&body=${body}`;
-    // Reset form and close modal
-    setFormData({
-      name: '',
-      surname: '',
-      number: '',
-      email: '',
-      message: '',
-    });
-    onClose();
+    setIsSubmitting(true);
+    setSubmitStatus(null);
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        setSubmitStatus('success');
+        // Reset form after successful submission
+        setFormData({
+          name: '',
+          surname: '',
+          number: '',
+          email: '',
+          message: '',
+        });
+        // Close modal after 2 seconds
+        setTimeout(() => {
+          onClose();
+          setSubmitStatus(null);
+        }, 2000);
+      } else {
+        setSubmitStatus('error');
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleCloseForm = () => {
@@ -45,6 +74,7 @@ const ContactForm = ({ isOpen, onClose }) => {
       email: '',
       message: '',
     });
+    setSubmitStatus(null);
     onClose();
   };
 
@@ -57,6 +87,21 @@ const ContactForm = ({ isOpen, onClose }) => {
           ×
         </button>
         <h2 className={styles.modalTitle}>Get in Touch</h2>
+        
+        {/* Success/Error Messages */}
+        {submitStatus === 'success' && (
+          <div className={styles.statusMessage} role="alert">
+            <span className={styles.successIcon}>✓</span>
+            <span>Message sent successfully! I&apos;ll get back to you soon.</span>
+          </div>
+        )}
+        {submitStatus === 'error' && (
+          <div className={`${styles.statusMessage} ${styles.error}`} role="alert">
+            <span className={styles.errorIcon}>✕</span>
+            <span>Failed to send message. Please try again or contact me directly.</span>
+          </div>
+        )}
+
         <form className={styles.contactForm} onSubmit={handleSubmit}>
           <div className={styles.formRow}>
             <div className={styles.formGroup}>
@@ -136,10 +181,19 @@ const ContactForm = ({ isOpen, onClose }) => {
           </div>
 
           <div className={styles.formActions}>
-            <button type="submit" className="btn btn-primary">
-              Send Message
+            <button 
+              type="submit" 
+              className="btn btn-primary"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? 'Sending...' : 'Send Message'}
             </button>
-            <button type="button" onClick={handleCloseForm} className="btn">
+            <button 
+              type="button" 
+              onClick={handleCloseForm} 
+              className="btn"
+              disabled={isSubmitting}
+            >
               Cancel
             </button>
           </div>
