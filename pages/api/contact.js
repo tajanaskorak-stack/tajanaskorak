@@ -16,11 +16,16 @@ export default async function handler(req, res) {
   // Check if environment variables are set
   if (!process.env.GMAIL_USER || !process.env.GMAIL_APP_PASSWORD) {
     console.error('Missing Gmail credentials in environment variables');
+    console.error('GMAIL_USER exists:', !!process.env.GMAIL_USER);
+    console.error('GMAIL_APP_PASSWORD exists:', !!process.env.GMAIL_APP_PASSWORD);
     return res.status(500).json({ 
       message: 'Email service not configured. Please contact the administrator.',
       success: false 
     });
   }
+
+  // Log configuration (without exposing password)
+  console.log('Gmail configuration loaded for:', process.env.GMAIL_USER);
 
   // Create transporter using Gmail SMTP
   const transporter = nodemailer.createTransport({
@@ -29,6 +34,9 @@ export default async function handler(req, res) {
       user: process.env.GMAIL_USER.trim(), // Your Gmail address
       pass: process.env.GMAIL_APP_PASSWORD.trim(), // Gmail App Password (not regular password)
     },
+    // Add connection timeout
+    connectionTimeout: 10000,
+    greetingTimeout: 10000,
   });
 
   // Email content
@@ -75,11 +83,10 @@ ${message}
   };
 
   try {
-    // Verify transporter configuration
-    await transporter.verify();
-    
-    // Send email
+    // Send email directly (verify can sometimes fail even when sending works)
     await transporter.sendMail(mailOptions);
+    
+    console.log('Email sent successfully to:', process.env.GMAIL_USER);
     
     return res.status(200).json({ 
       message: 'Email sent successfully!',
@@ -87,16 +94,31 @@ ${message}
     });
   } catch (error) {
     console.error('Error sending email:', error);
+    console.error('Error details:', {
+      code: error.code,
+      command: error.command,
+      response: error.response,
+      responseCode: error.responseCode,
+    });
     
-    // Provide more detailed error information in development
-    const errorMessage = process.env.NODE_ENV === 'development' 
-      ? `Failed to send email: ${error.message}` 
-      : 'Failed to send email. Please try again later.';
+    // Provide more detailed error information
+    let errorMessage = 'Failed to send email. Please try again later.';
+    
+    if (error.code === 'EAUTH') {
+      errorMessage = 'Authentication failed. Please check your Gmail App Password.';
+    } else if (error.code === 'ECONNECTION' || error.code === 'ETIMEDOUT') {
+      errorMessage = 'Connection error. Please check your internet connection.';
+    } else if (error.responseCode === 535) {
+      errorMessage = 'Invalid Gmail App Password. Please generate a new one.';
+    } else if (process.env.NODE_ENV === 'development') {
+      errorMessage = `Failed to send email: ${error.message}`;
+    }
     
     return res.status(500).json({ 
       message: errorMessage,
       success: false,
-      error: process.env.NODE_ENV === 'development' ? error.message : undefined
+      error: process.env.NODE_ENV === 'development' ? error.message : undefined,
+      errorCode: process.env.NODE_ENV === 'development' ? error.code : undefined
     });
   }
 }

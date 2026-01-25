@@ -11,6 +11,7 @@ const ContactForm = ({ isOpen, onClose }) => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null); // 'success' | 'error' | null
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -21,6 +22,7 @@ const ContactForm = ({ isOpen, onClose }) => {
     // Clear status when user starts typing again
     if (submitStatus) {
       setSubmitStatus(null);
+      setErrorMessage('');
     }
   };
 
@@ -28,6 +30,7 @@ const ContactForm = ({ isOpen, onClose }) => {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitStatus(null);
+    setErrorMessage('');
 
     try {
       const response = await fetch('/api/contact', {
@@ -54,13 +57,17 @@ const ContactForm = ({ isOpen, onClose }) => {
         setTimeout(() => {
           onClose();
           setSubmitStatus(null);
+          setErrorMessage('');
         }, 2000);
       } else {
         setSubmitStatus('error');
+        setErrorMessage(data.message || 'Failed to send message. Please try again.');
+        console.error('API Error:', data);
       }
     } catch (error) {
       console.error('Error submitting form:', error);
       setSubmitStatus('error');
+      setErrorMessage('Network error. Please check your connection and try again.');
     } finally {
       setIsSubmitting(false);
     }
@@ -75,6 +82,7 @@ const ContactForm = ({ isOpen, onClose }) => {
       message: '',
     });
     setSubmitStatus(null);
+    setErrorMessage('');
     onClose();
   };
 
@@ -98,7 +106,7 @@ const ContactForm = ({ isOpen, onClose }) => {
         {submitStatus === 'error' && (
           <div className={`${styles.statusMessage} ${styles.error}`} role="alert">
             <span className={styles.errorIcon}>✕</span>
-            <span>Failed to send message. Please try again or contact me directly.</span>
+            <span>{errorMessage || 'Failed to send message. Please try again or contact me directly.'}</span>
           </div>
         )}
 
