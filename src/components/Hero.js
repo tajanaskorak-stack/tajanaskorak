@@ -76,9 +76,9 @@ const Hero = () => {
                   tajanaskorak@gmail.com
                 </a>
                 <span className={styles.separator}>•</span>
-                <a href="tel:+385989679485">
+                <a href="tel:+385989679486">
                   <span className={styles.contactIcon}>📞</span>
-                  +385 98 967 9485
+                  +385 98 967 9486
                 </a>
               </div>
             </div>

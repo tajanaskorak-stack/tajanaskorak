@@ -18,8 +18,13 @@ export default async function handler(req, res) {
     console.error('Missing Gmail credentials in environment variables');
     console.error('GMAIL_USER exists:', !!process.env.GMAIL_USER);
     console.error('GMAIL_APP_PASSWORD exists:', !!process.env.GMAIL_APP_PASSWORD);
+    
+    // In production, provide a more user-friendly error
+    const isProduction = process.env.NODE_ENV === 'production' || process.env.VERCEL;
     return res.status(500).json({ 
-      message: 'Email service not configured. Please contact the administrator.',
+      message: isProduction 
+        ? 'Email service is temporarily unavailable. Please contact me directly at tajanaskorak@gmail.com'
+        : 'Email service not configured. Please contact the administrator.',
       success: false 
     });
   }
@@ -30,13 +35,17 @@ export default async function handler(req, res) {
   // Create transporter using Gmail SMTP
   const transporter = nodemailer.createTransport({
     service: 'gmail',
+    host: 'smtp.gmail.com',
+    port: 587,
+    secure: false, // true for 465, false for other ports
     auth: {
       user: process.env.GMAIL_USER.trim(), // Your Gmail address
       pass: process.env.GMAIL_APP_PASSWORD.trim(), // Gmail App Password (not regular password)
     },
     // Add connection timeout
-    connectionTimeout: 10000,
-    greetingTimeout: 10000,
+    connectionTimeout: 15000,
+    greetingTimeout: 15000,
+    socketTimeout: 15000,
   });
 
   // Email content
