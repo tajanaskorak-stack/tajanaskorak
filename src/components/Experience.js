@@ -31,7 +31,7 @@ const Experience = () => {
 
         <div className={styles.experienceItem}>
           <div className={styles.experienceHeader}>
-            <h3 className={styles.jobTitle}>Affiliate marketing manager</h3>
+            <h3 className={styles.jobTitle}>Affiliate Marketing Manager</h3>
             <span className={styles.date}>Honorar job | 2016. — 2020.</span>
           </div>
 
