@@ -28,6 +28,21 @@ const Experience = () => {
         </div>
 
         <hr className="gold-line" />
+
+        <div className={styles.experienceItem}>
+          <div className={styles.experienceHeader}>
+            <h3 className={styles.jobTitle}>Affiliate marketing manager</h3>
+            <span className={styles.date}>Honorar job | 2016. — 2020.</span>
+          </div>
+
+          <ul className={styles.responsibilities}>
+            <li>Market research</li>
+            <li>Finding new users</li>
+            <li>Creating a sales strategy and actively participating in sales</li>
+          </ul>
+        </div>
+
+        <hr className="gold-line" />
       </div>
     </section>
   );
