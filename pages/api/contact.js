@@ -13,12 +13,21 @@ export default async function handler(req, res) {
     return res.status(400).json({ message: 'Missing required fields' });
   }
 
+  // Check if environment variables are set
+  if (!process.env.GMAIL_USER || !process.env.GMAIL_APP_PASSWORD) {
+    console.error('Missing Gmail credentials in environment variables');
+    return res.status(500).json({ 
+      message: 'Email service not configured. Please contact the administrator.',
+      success: false 
+    });
+  }
+
   // Create transporter using Gmail SMTP
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: process.env.GMAIL_USER, // Your Gmail address
-      pass: process.env.GMAIL_APP_PASSWORD, // Gmail App Password (not regular password)
+      user: process.env.GMAIL_USER.trim(), // Your Gmail address
+      pass: process.env.GMAIL_APP_PASSWORD.trim(), // Gmail App Password (not regular password)
     },
   });
 
@@ -66,6 +75,9 @@ ${message}
   };
 
   try {
+    // Verify transporter configuration
+    await transporter.verify();
+    
     // Send email
     await transporter.sendMail(mailOptions);
     
@@ -75,9 +87,16 @@ ${message}
     });
   } catch (error) {
     console.error('Error sending email:', error);
+    
+    // Provide more detailed error information in development
+    const errorMessage = process.env.NODE_ENV === 'development' 
+      ? `Failed to send email: ${error.message}` 
+      : 'Failed to send email. Please try again later.';
+    
     return res.status(500).json({ 
-      message: 'Failed to send email. Please try again later.',
-      success: false 
+      message: errorMessage,
+      success: false,
+      error: process.env.NODE_ENV === 'development' ? error.message : undefined
     });
   }
 }
